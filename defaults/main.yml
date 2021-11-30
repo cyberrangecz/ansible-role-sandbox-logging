@@ -1,0 +1,7 @@
+---
+
+slf_destination: "{{ hostvars['man'].ansible_host }}"
+slf_sandbox_id: "{{ kypo_global_sandbox_allocation_unit_id }}"
+
+
+
