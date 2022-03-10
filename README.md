@@ -36,11 +36,17 @@ This role represents the master Ansible role for the logging configuration of th
 
 * **Mandatory parameters**
   * `slf_destination` - A resolvable hostname or IP address of the destination log host that should be active and able to process logs in the format defined in the RFC5424 standard. The variable doesn't have to be set if the variable `hostvars['man'].ansible_host` is defined instead, but `slf_destination` has the highest priority.
-  * `slf_sandbox_id` - Sandbox ID. The variable doesn't have to be set if the variable `kypo_global_sandbox_allocation_unit_id` is defined instead, but `slf_sandbox_id` has the highest priority.
+
+* **Dependant mandatory parameters** - depends on the value of the `slf_local_env` (default: `False`) parameter
+  1. **Cloud environment** => `slf_local_env = False`: 
+     * `slf_sandbox_id` - Sandbox ID. The variable doesn't have to be set if the variable `kypo_global_sandbox_allocation_unit_id` is defined instead, but `slf_sandbox_id` has the highest priority.
+     * `slf_pool_id` - Pool ID. The variable doesn't have to be set if the variable `kypo_global_pool_id` is defined instead, but `slf_pool_id` has the highest priority.
+  2. **Local environment** => `slf_local_env = True`: 
+     * `slf_user_id` - User ID.
+     * `slf_access_token` - Access token of the training instance.
 
 * **Optional parameters**
   * `slf_sandbox_name` - Sandbox name (default: `None`). The variable `kypo_global_sandbox_name` can be used instead, but `slf_sandbox_name` has the highest priority.
-  * `slf_pool_id` - Pool ID (default: `None`). The variable `kypo_global_pool_id` can be used instead, but `slf_pool_id` has the highest priority.
   * `slf_destination_port` - Remote host destination port (default: `514`).
   * `slf_destination_protocol` - The transport protocol used for transmission of the logs to the remote host. Values 'tcp', 'tls' and 'udp' are supported. (default: `tcp`).
   * `slf_forward_log_severity` - Severity of the forwarded log entries (default: `*`).
