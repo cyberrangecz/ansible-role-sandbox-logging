@@ -37,11 +37,11 @@ This role represents the master Ansible role for the logging configuration of th
 * **Mandatory parameters**
   * `slf_destination` - A resolvable hostname or IP address of the destination log host that should be active and able to process logs in the format defined in the RFC5424 standard. The variable doesn't have to be set if the variable `hostvars['man'].ansible_host` is defined instead, but `slf_destination` has the highest priority.
 
-* **Dependant mandatory parameters** - depends on the value of the `slf_local_env` (default: `False`) parameter
-  1. **Cloud environment** => `slf_local_env = False`: 
+* **Dependant mandatory parameters** - depends on the value of the `slf_local_env` (default: `False`) parameter which is automaticaly set to `True` if `slf_sandbox_id` and `slf_pool_id` are defined.
+  1. **Cloud environment** => `slf_local_env = false`: 
      * `slf_sandbox_id` - Sandbox ID. The variable doesn't have to be set if the variable `kypo_global_sandbox_allocation_unit_id` is defined instead, but `slf_sandbox_id` has the highest priority.
      * `slf_pool_id` - Pool ID. The variable doesn't have to be set if the variable `kypo_global_pool_id` is defined instead, but `slf_pool_id` has the highest priority.
-  2. **Local environment** => `slf_local_env = True`: 
+  2. **Local environment** => `slf_local_env = true`: 
      * `slf_user_id` - User ID.
      * `slf_access_token` - Access token of the training instance.
 
