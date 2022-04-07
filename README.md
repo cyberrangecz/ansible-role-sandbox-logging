@@ -1,6 +1,6 @@
 # Ansible role - KYPO Sandbox Logging
 
-This role represents the master Ansible role for the logging configuration of the hosts. It uses several Ansible roles: 
+This role represents the master Ansible role for the logging configuration of the hosts. It facilitate the usage of the following Ansible roles: 
 
 1. [sandbox-logging-bash](https://gitlab.ics.muni.cz/muni-kypo/ansible-roles/sandbox-logging-bash) - local terminal command logging.
 2. [sandbox-logging-msf](https://gitlab.ics.muni.cz/muni-kypo/ansible-roles/sandbox-logging-msf) - local Metasploit command logging.
@@ -21,58 +21,33 @@ This role represents the master Ansible role for the logging configuration of th
 * The above-mentioned roles are applied to the hosts based on the Ansible variables, therefore don't disable directive `gather_facts`.
 * If the role is applied to the host with Kali Linux distribution it needs to have Metasploit installed. 
 
+## Parameters 
 
-## Sub-roles parameters 
+**sandbox-logging** role has neither mandatory nor optional parameters. Only sub-roles have several parameters that can be still overridden from the master role. Parameters and their descriptions are available in the README files of the above-mentioned sub-roles. 
 
-### 1. sandbox-logging-bash 
+## Usage
 
-* None 
+The role sets parameter `slf_local_env` of the `sandbox-logging-forward` role to distinguish between local and cloud environments. It is done based on the available sub-roles parameters. 
 
-### 2. sandbox-logging-msf
+### Local environment
+For  **local environment it is required** to set `slf_destination`, `slf_user_id` and `slf_access_token`. If `slf_user_id` and `slf_access_token` are defined, the master role will set parameter `slf_local_env` to `true` automatically.
 
-* None
+### Cloud environment
+For cloud environmnent the mandatory parameters (`kypo_global_sandbox_allocation_unit_id`, `kypo_global_pool_id`, `hostvars['man'].ansible_host`) are already set so no additional configuration is needed. In this case, `slf_local_env` is set to `false`.
 
-### 3. sandbox-logging-forward
+### Example
 
-* **Mandatory parameters**
-  * `slf_destination` - A resolvable hostname or IP address of the destination log host that should be active and able to process logs in the format defined in the RFC5424 standard. The variable doesn't have to be set if the variable `hostvars['man'].ansible_host` is defined instead, but `slf_destination` has the highest priority.
-
-* **Dependant mandatory parameters** - depends on the used environment. Define parameters from one of the following environments.
-  1. **Cloud environment** => `slf_local_env = false`: 
-     * `slf_sandbox_id` - Sandbox ID. The variable doesn't have to be set if the variable `kypo_global_sandbox_allocation_unit_id` is defined instead, but `slf_sandbox_id` has the highest priority.
-     * `slf_pool_id` - Pool ID. The variable doesn't have to be set if the variable `kypo_global_pool_id` is defined instead, but `slf_pool_id` has the highest priority.
-  2. **Local environment** => `slf_local_env = true`: 
-     * `slf_user_id` - User ID.
-     * `slf_access_token` - Access token of the training instance.
-
-* **Optional parameters**
-  * `slf_sandbox_name` - Sandbox name (default: `None`). The variable `kypo_global_sandbox_name` can be used instead, but `slf_sandbox_name` has the highest priority.
-  * `slf_destination_port` - Remote host destination port (default: `514`).
-  * `slf_destination_protocol` - The transport protocol used for transmission of the logs to the remote host. Values 'tcp', 'tls' and 'udp' are supported. (default: `tcp`).
-  * `slf_forward_log_severity` - Severity of the forwarded log entries (default: `*`).
-  * `slf_tag_regexes` - Filter messages based on the Syslog tags that matches one of these regexes (default: `['bash.command', 'msf.command']`)
-
-* **Encrypted communication**
-
-  To use encrypted communication you must set `slf_destination_protocol` to `tls` and set the following parameter:
-  * `slf_rsyslog_ca_cert_file` - Path to the trusted CA certificate (default: `None`).
-
-  To use **mutual authentication** set the following parameters:
-  * `slf_rsyslog_cert_file` - Path to the client certificate in PEM format matching the private key set in the `slf_rsyslog_key_file` (default: `None`).
-  * `slf_rsyslog_key_file` - Path to the unencrypted client private key in PEM format. Define this variable to enable **encrypted communication** (default: `None`). TCP protocol must be set.
-
-## Example
-
-The simplest example of sandbox logging configuration.
+All in all, the simplest example of sandbox logging configuration looks as follows: 
 
 ```
 roles:
   - role: sandbox-logging
-    slf_destination: 192.168.0.5
-    slf_sandbox_id: sandbox-1
+    slf_destination_port: '{% if hostvars["man"] is defined -%} 514 {%- else -%} 515 {%- endif %}'
     become: yes
 
 ```
+
+`slf_destination_port` must be set conditionally because the host in cloud sandbox sends logs to MAN (port 514) but in a local sandbox, the logs are sent to the central Syslog (port 515).
 
 ## Caution
 
