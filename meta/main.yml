@@ -51,7 +51,7 @@ dependencies:
   - name: sandbox-logging-bash
     src: https://gitlab.ics.muni.cz/muni-kypo/ansible-roles/sandbox-logging-bash.git
     scm: git
-    version: 1.0.4
+    version: 1.0.5
     tags: [never] # Ansible will install and skip execution of that role unless you specifically request it
 
   - name: sandbox-logging-msf
