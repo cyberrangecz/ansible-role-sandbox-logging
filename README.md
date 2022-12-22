@@ -33,7 +33,7 @@ The role sets parameter `slf_local_env` of the `sandbox-logging-forward` role to
 For  **local environment it is required** to set `slf_destination`, `slf_user_id` and `slf_access_token`. If `slf_user_id` and `slf_access_token` are defined, the master role will set parameter `slf_local_env` to `true` automatically.
 
 ### Cloud environment
-For cloud environmnent the mandatory parameters (`kypo_global_sandbox_allocation_unit_id`, `kypo_global_pool_id`, `hostvars['man'].ansible_host`) are already set so no additional configuration is needed. In this case, `slf_local_env` is set to `false`.
+For cloud environmnent the mandatory parameters (`kypo_global_sandbox_id`, `kypo_global_pool_id`, `hostvars['man'].ansible_host`) are already set so no additional configuration is needed. In this case, `slf_local_env` is set to `false`.
 
 ### Example
 
