@@ -1,67 +1,24 @@
 galaxy_info:
-  author: KYPO Team
+  author: KYPO Team (Masaryk University) and CyberSecurity Hub
   description: Add msf4 commands to the Syslog.
-  company: CSIRT-MU
-
-  # If the issue tracker for your role is not on github, uncomment the
-  # next line and provide a value
-  # issue_tracker_url: http://example.com/issue/tracker
-
-  # Choose a valid license ID from https://spdx.org - some suggested licenses:
-  # - BSD-3-Clause (default)
-  # - MIT
-  # - GPL-2.0-or-later
-  # - GPL-3.0-only
-  # - Apache-2.0
-  # - CC-BY-4.0
-  license: MIT 
-
-  min_ansible_version: 2.4
-
-  # If this a Container Enabled role, provide the minimum Ansible Container version.
-  # min_ansible_container_version:
-
-  #
-  # Provide a list of supported platforms, and for each platform a list of versions.
-  # If you don't wish to enumerate all versions for a particular platform, use 'all'.
-  # To view available platforms and versions (or releases), visit:
-  # https://galaxy.ansible.com/api/v1/platforms/
-  #
-  # platforms:
-  # - name: Fedora
-  #   versions:
-  #   - all
-  #   - 25
-  # - name: SomePlatform
-  #   versions:
-  #   - all
-  #   - 1.0
-  #   - 7
-  #   - 99.99
-
+  company: CSIRT-MU and CyberSecurity Hub, z.s.
+  license: MIT
+  min_ansible_version: '2.14'
   galaxy_tags: []
-    # List tags for your role here, one per line. A tag is a keyword that describes
-    # and categorizes the role. Users find roles by searching for tags. Be sure to
-    # remove the '[]' above, if you add tags to this list.
-    #
-    # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
-    #       Maximum 20 tags per role.
 
-dependencies: 
+dependencies:
   - name: sandbox-logging-bash
-    src: https://gitlab.ics.muni.cz/muni-kypo/ansible-roles/sandbox-logging-bash.git
+    src: https://github.com/cyberrangecz/ansible-role-sandbox-logging-bash.git
     scm: git
-    version: 1.0.5
-    tags: [never] # Ansible will install and skip execution of that role unless you specifically request it
-
+    version: v1.0.0
+    tags: [ never ] # Ansible will install and skip execution of that role unless you specifically request it
   - name: sandbox-logging-msf
-    src: https://gitlab.ics.muni.cz/muni-kypo/ansible-roles/sandbox-logging-msf.git
+    src: https://github.com/cyberrangecz/ansible-role-sandbox-logging-msf.git
     scm: git
-    version: 1.0.2
-    tags: [never] # Ansible will install and skip execution of that role unless you specifically request it
-
+    version: v1.0.0
+    tags: [ never ] # Ansible will install and skip execution of that role unless you specifically request it
   - name: sandbox-logging-forward
-    src: https://gitlab.ics.muni.cz/muni-kypo/ansible-roles/sandbox-logging-forward.git
+    src: https://github.com/cyberrangecz/ansible-role-sandbox-logging-forward.git
     scm: git
-    version: 1.0.2
-    tags: [never] # Ansible will install and skip execution of that role unless you specifically request it
+    version: v1.0.0
+    tags: [ never ] # Ansible will install and skip execution of that role unless you specifically request it
